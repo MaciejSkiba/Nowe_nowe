@@ -42,4 +42,16 @@ $db->close();
     }
 );
 
+$app->post(
+    '/api/participants',
+    function (Request $request, Response $response, array $args) use ($db){
+
+ $participants = [];
+ $participantData = $request->getParsedBody();
+ $sql = "INSERT INTO participant (firstname, lastname) VALUES ('$participantData[firstname]', '$participantData[lastname]')";
+$ret = $db->exec($sql);
+        return $response->withStatus(201);
+    }
+);
+
 $app->run();

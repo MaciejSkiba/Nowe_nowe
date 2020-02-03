@@ -26,26 +26,27 @@
 </template>
 
 <script>
-  import ParticipantsList from "./ParticipantsList.vue";
-  import NewParticipantForm from "./NewParticipantForm.vue";
+import ParticipantsList from "./ParticipantsList.vue";
+import NewParticipantForm from "./NewParticipantForm.vue";
 
-  export default {
-    components: {ParticipantsList, NewParticipantForm},
-    data() {
-      return {
-        people: []
-      };
-    },
-    methods: {
-      addNewParticipant(participant) {
+export default {
+  components: {ParticipantsList, NewParticipantForm},
+  data() {
+    return {
+      people: []
+    };
+  },
+  methods: {
+    addNewParticipant(participant) {
+      this.$http.post('participants', participant).then(response => {
         this.people.push(participant);
-      }
+      });
     },
-    mounted() {
-  this.$http.get('participants').then(response => {
-    this.people = response.body;
-  });
+  },
+  mounted() {
+    this.$http.get('participants').then(response => {
+      this.people = response.body;
+    });
+  }
 }
-
-  };
 </script>
